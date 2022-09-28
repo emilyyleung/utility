@@ -12,9 +12,6 @@ export default function InputHiddenLabel({
     setValue(e.target.value);
     if (new Date(e.target.value) > 0) {
       setOtherValue(new Date(e.target.value));
-    } else {
-      console.log(e.target.value);
-      setOtherValue('');
     }
   };
 
