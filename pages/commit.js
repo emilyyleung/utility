@@ -22,12 +22,6 @@ export default function CommitPage() {
 
   const [copied, setCopied] = useState(false);
 
-  // useEffect(() => {
-  //   if (commitTitle) {
-  //     setOutput([commitTitle, outputBody].join('\n\n'));
-  //   }
-  // }, [commitTitle]);
-
   useEffect(() => {
     let words = commitMessage.split(' ');
 
@@ -60,7 +54,11 @@ export default function CommitPage() {
   }, [commitMessage, rowWidth]);
 
   useEffect(() => {
-    setOutput([commitTitle, outputBody].join('\n\n'));
+    if (commitTitle.length > 0) {
+      setOutput([commitTitle, outputBody].join('\n\n'));
+    } else {
+      setOutput(outputBody);
+    }
   }, [commitTitle, outputBody]);
 
   useEffect(() => {
@@ -86,7 +84,7 @@ export default function CommitPage() {
           placeholder="Write your title"
           value={commitTitle}
           setValue={setCommitTitle}
-          maxlength="50"
+          maxLength="50"
         />
 
         <TextArea
