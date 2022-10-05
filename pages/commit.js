@@ -2,20 +2,31 @@ import { useState, useEffect } from 'react';
 
 import TextArea from 'components/Form/Input/TextArea';
 import NumberInput from 'components/Form/Input/NumberInput';
+import TextInput from 'components/Form/Input/TextInput';
 
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+const titleIpsum = 'Maecenas pharetra laoreet arcu eget ornare';
 
 const loremIpsum =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in nisi at dui faucibus tincidunt eu sit amet libero. Quisque lacinia est non dolor faucibus tempus. Vivamus dictum mattis nibh, vitae tristique tellus consectetur in. Cras vitae dignissim diam. Nullam vel quam dolor. Proin non metus elementum, porttitor nisl nec, tempus felis. Suspendisse in scelerisque magna. Donec massa lorem, luctus at viverra id, vulputate vel elit. Sed cursus, nulla ac gravida consectetur, lorem augue dignissim nulla, vitae accumsan justo enim posuere odio. Nulla facilisi. Phasellus tincidunt a neque a viverra. Nam rhoncus eu nunc id viverra. Sed consectetur vulputate erat ut ornare. Etiam molestie efficitur tincidunt.';
 
 export default function CommitPage() {
+  const [commitTitle, setCommitTitle] = useState(titleIpsum);
   const [commitMessage, setCommitMessage] = useState(loremIpsum);
 
+  const [outputBody, setOutputBody] = useState('');
   const [output, setOutput] = useState('');
 
-  const [rowWidth, setRowWidth] = useState(70);
+  const [rowWidth, setRowWidth] = useState(72);
 
   const [copied, setCopied] = useState(false);
+
+  // useEffect(() => {
+  //   if (commitTitle) {
+  //     setOutput([commitTitle, outputBody].join('\n\n'));
+  //   }
+  // }, [commitTitle]);
 
   useEffect(() => {
     let words = commitMessage.split(' ');
@@ -45,8 +56,12 @@ export default function CommitPage() {
       }
     }
 
-    setOutput(out.join('\n'));
+    setOutputBody(out.join('\n'));
   }, [commitMessage, rowWidth]);
+
+  useEffect(() => {
+    setOutput([commitTitle, outputBody].join('\n\n'));
+  }, [commitTitle, outputBody]);
 
   useEffect(() => {
     if (copied) {
@@ -61,6 +76,19 @@ export default function CommitPage() {
   return (
     <div className="bg-slate-200 min-h-screen">
       <div className="mx-auto pt-10 max-w-3xl px-10 lg:px-0 grid gap-4">
+        <TextInput
+          label={`Write your title (${
+            50 - commitTitle.length
+          } characters left)`}
+          name="title"
+          type="text"
+          id="title"
+          placeholder="Write your title"
+          value={commitTitle}
+          setValue={setCommitTitle}
+          maxlength="50"
+        />
+
         <TextArea
           label="Write your commit message"
           name="commit"
@@ -79,7 +107,7 @@ export default function CommitPage() {
               setValue={setRowWidth}
               min={30}
               max={100}
-              step={5}
+              step={2}
             />
           </div>
           <div className="justify-self-end">
