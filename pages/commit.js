@@ -53,18 +53,21 @@ export default function CommitPage() {
     setOutputBody(out.join('\n'));
   }, [commitMessage, rowWidth]);
 
+  // Update the final output for copying to clipboard
   useEffect(() => {
-    if (commitTitle.length > 0) {
+    if (commitMessage.length == 0) {
+      setOutput(commitTitle);
+    } else if (commitTitle.length > 0) {
       setOutput([commitTitle, outputBody].join('\n\n'));
     } else {
       setOutput(outputBody);
     }
-  }, [commitTitle, outputBody]);
+  }, [commitTitle, commitMessage, outputBody]);
 
   useEffect(() => {
     if (copied) {
       const timer = setTimeout(() => {
-        console.log('This will run after 1 second!');
+        // console.log('This will run after 1 second!');
         setCopied(false);
       }, 1000);
       return () => clearTimeout(timer);
