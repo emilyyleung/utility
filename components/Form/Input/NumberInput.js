@@ -16,7 +16,7 @@ export default function NumberInput({
           <button
             onClick={() => {
               if (parseInt(value) < max) {
-                setValue(parseInt(value) + 5);
+                setValue(parseInt(value) + step);
               }
             }}
           >
@@ -53,7 +53,7 @@ export default function NumberInput({
           <button
             onClick={() => {
               if (parseInt(value) > min) {
-                setValue(parseInt(value) - 5);
+                setValue(parseInt(value) - step);
               }
             }}
           >
