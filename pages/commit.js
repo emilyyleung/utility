@@ -54,17 +54,19 @@ export default function CommitPage() {
   }, [commitMessage, rowWidth]);
 
   useEffect(() => {
-    if (commitTitle.length > 0) {
+    if (commitMessage.length == 0) {
+      setOutput(commitTitle);
+    } else if (commitTitle.length > 0) {
       setOutput([commitTitle, outputBody].join('\n\n'));
     } else {
       setOutput(outputBody);
     }
-  }, [commitTitle, outputBody]);
+  }, [commitTitle, commitMessage, outputBody]);
 
   useEffect(() => {
     if (copied) {
       const timer = setTimeout(() => {
-        console.log('This will run after 1 second!');
+        // console.log('This will run after 1 second!');
         setCopied(false);
       }, 1000);
       return () => clearTimeout(timer);
@@ -109,7 +111,13 @@ export default function CommitPage() {
             />
           </div>
           <div className="justify-self-end">
-            <CopyToClipboard text={output} onCopy={() => setCopied(true)}>
+            <CopyToClipboard
+              text={output}
+              onCopy={() => {
+                console.log(output);
+                setCopied(true);
+              }}
+            >
               {copied ? (
                 <button
                   className="inline-flex items-center rounded border border-green-700 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none"
