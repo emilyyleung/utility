@@ -53,6 +53,7 @@ export default function CommitPage() {
     setOutputBody(out.join('\n'));
   }, [commitMessage, rowWidth]);
 
+  // Update the final output for copying to clipboard
   useEffect(() => {
     if (commitMessage.length == 0) {
       setOutput(commitTitle);
@@ -111,13 +112,7 @@ export default function CommitPage() {
             />
           </div>
           <div className="justify-self-end">
-            <CopyToClipboard
-              text={output}
-              onCopy={() => {
-                console.log(output);
-                setCopied(true);
-              }}
-            >
+            <CopyToClipboard text={output} onCopy={() => setCopied(true)}>
               {copied ? (
                 <button
                   className="inline-flex items-center rounded border border-green-700 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none"
