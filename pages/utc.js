@@ -65,6 +65,7 @@ export default function UTCPage() {
               value={timestamptz}
               setValue={seTimestamptz}
               setOtherValue={setDatetime}
+              focus={true}
             />
           </div>
           <div className="px-4 font-semibold dark:text-white py-2">or</div>
