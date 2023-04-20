@@ -88,6 +88,7 @@ export default function CommitPage() {
           value={commitTitle}
           setValue={setCommitTitle}
           maxLength="50"
+          focus={true}
         />
 
         <TextArea
